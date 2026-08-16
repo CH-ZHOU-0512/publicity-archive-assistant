@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/CH-ZHOU-0512/publicity-archive-assistant/issues"
   },
-  "homepage": "https://github.com/CH-ZHOU-0512/publicity-archive-assistant#readme",
+  "homepage": "https://ch-zhou-0512.github.io/publicity-archive-assistant/",
   "private": true,
   "type": "module",
   "main": "dist/desktop/main.js",

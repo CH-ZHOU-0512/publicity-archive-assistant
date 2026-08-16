@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateAdaptiveScale, calculateSlices } from "./capture.js";
+import { calculateAdaptiveScale, calculateSlices, expandHorizontalCaptureBounds } from "./capture.js";
 
 describe("screenshot A4 pagination", () => {
   it("fits a small trailing fragment onto the preceding page with subtle scaling", () => {
@@ -32,6 +32,18 @@ describe("screenshot A4 pagination", () => {
     expect(slices.reduce((sum, slice) => sum + slice.height, 0)).toBe(1_800);
   });
 
+  it("keeps a safety gap when a text line begins just below the nominal cut", () => {
+    const slices = calculateSlices({
+      x: 0,
+      y: 0,
+      width: 1_280,
+      height: 1_800,
+      blockBounds: [{ top: 1_001, bottom: 1_024 }]
+    }, 1_000);
+
+    expect(slices[0]?.height).toBe(997);
+  });
+
   it("does not create a nearly-empty final page after a text-aware boundary", () => {
     const slices = calculateSlices({
       x: 300,
@@ -60,5 +72,23 @@ describe("screenshot A4 pagination", () => {
     expect(slices).toHaveLength(3);
     expect(slices.every((slice) => slice.height <= 1_030)).toBe(true);
     expect(slices.reduce((sum, slice) => sum + slice.height, 0)).toBe(3_080);
+  });
+});
+
+describe("screenshot horizontal bounds", () => {
+  it("keeps content that overflows both sides of an article container", () => {
+    expect(expandHorizontalCaptureBounds(
+      { x: 300, width: 677 },
+      [{ left: 276, right: 1003 }],
+      1280
+    )).toEqual({ x: 264, width: 751 });
+  });
+
+  it("clamps safety padding to the document surface", () => {
+    expect(expandHorizontalCaptureBounds(
+      { x: 0, width: 1280 },
+      [{ left: -40, right: 1320 }],
+      1280
+    )).toEqual({ x: 0, width: 1280 });
   });
 });

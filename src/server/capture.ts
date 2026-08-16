@@ -19,6 +19,34 @@ interface CaptureGeometry {
   blockBounds: Array<{ top: number; bottom: number }>;
 }
 
+interface HorizontalCaptureBounds {
+  x: number;
+  width: number;
+}
+
+/**
+ * Expands a nominal article rectangle to include visible content that hangs
+ * outside its container (negative margins, transforms, wide figures, etc.).
+ * The final rectangle remains inside the document surface so Chromium never
+ * receives an invalid screenshot clip.
+ */
+export function expandHorizontalCaptureBounds(
+  base: HorizontalCaptureBounds,
+  contentRects: Array<{ left: number; right: number }>,
+  documentWidth: number,
+  padding = 12
+): HorizontalCaptureBounds {
+  const validRects = contentRects.filter((rect) =>
+    Number.isFinite(rect.left) && Number.isFinite(rect.right) && rect.right > rect.left
+  );
+  const minimumLeft = Math.min(base.x, ...validRects.map((rect) => rect.left));
+  const maximumRight = Math.max(base.x + base.width, ...validRects.map((rect) => rect.right));
+  const surfaceRight = Math.max(documentWidth, base.x + base.width);
+  const x = Math.max(0, Math.floor(minimumLeft - padding));
+  const right = Math.min(surfaceRight, Math.ceil(maximumRight + padding));
+  return { x, width: Math.max(1, right - x) };
+}
+
 export async function prepareCaptureDocument(
   page: Page,
   metadata: ExtractedMetadata,
@@ -216,6 +244,35 @@ export async function prepareCaptureDocument(
           captureY = Math.max(0, Math.floor(frameRect.top + window.scrollY));
           width = Math.ceil(frameRect.width);
           height = Math.ceil(frameRect.height);
+        }
+        const horizontalScope = wechatFrame ?? pageArticle;
+        if (horizontalScope) {
+          const captureBottom = captureY + height;
+          const visibleHorizontalRects = [horizontalScope, ...horizontalScope.querySelectorAll<HTMLElement>("*")]
+            .map((element) => {
+              const rect = element.getBoundingClientRect();
+              const style = getComputedStyle(element);
+              return {
+                left: rect.left + window.scrollX,
+                right: rect.right + window.scrollX,
+                top: rect.top + window.scrollY,
+                bottom: rect.bottom + window.scrollY,
+                visible: style.display !== "none" && style.visibility !== "hidden" && style.position !== "fixed"
+              };
+            })
+            .filter((rect) => rect.visible && rect.right > rect.left && rect.bottom > captureY && rect.top < captureBottom);
+          const documentWidth = Math.max(
+            root.scrollWidth,
+            document.body?.scrollWidth || 0,
+            window.innerWidth,
+            captureX + width
+          );
+          const minimumLeft = Math.min(captureX, ...visibleHorizontalRects.map((rect) => rect.left));
+          const maximumRight = Math.max(captureX + width, ...visibleHorizontalRects.map((rect) => rect.right));
+          const expandedX = Math.max(0, Math.floor(minimumLeft - 12));
+          const expandedRight = Math.min(documentWidth, Math.ceil(maximumRight + 12));
+          captureX = expandedX;
+          width = Math.max(1, expandedRight - expandedX);
         }
         const textBounds: Array<{ top: number; bottom: number }> = [];
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
@@ -657,7 +714,7 @@ export function calculateSlices(geometry: CaptureGeometry, nominalHeight: number
     let bottom = Math.min(top + nominalHeight, end);
     if (bottom < end) {
       const intersecting = geometry.blockBounds
-        .filter((block) => block.bottom - block.top < nominalHeight * 0.7 && block.top < bottom && block.bottom > bottom)
+        .filter((block) => block.bottom - block.top < nominalHeight * 0.7 && block.top - 3 < bottom && block.bottom + 3 > bottom)
         .sort((a, b) => b.top - a.top)[0];
       if (intersecting && intersecting.top - top > nominalHeight * 0.7) {
         bottom = Math.max(top + 1, intersecting.top - 4);
@@ -679,7 +736,7 @@ export function calculateSlices(geometry: CaptureGeometry, nominalHeight: number
       if (bottom < minimumBottom) {
         bottom = minimumBottom;
         const crossingAfterClamp = geometry.blockBounds
-          .filter((block) => block.top < bottom && block.bottom > bottom)
+          .filter((block) => block.top - 3 < bottom && block.bottom + 3 > bottom)
           .sort((a, b) => a.bottom - b.bottom)[0];
         if (crossingAfterClamp && crossingAfterClamp.bottom + 2 <= top + nominalHeight) {
           bottom = crossingAfterClamp.bottom + 2;

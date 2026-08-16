@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>宣传记录助手｜高保真网页新闻归档为 A4 PDF</title>
+  <meta name="description" content="本地运行的 Windows 网页归档工具，将新闻网页与微信公众号文章保存为可追溯、可打印的 A4 PDF。">
+  <meta name="theme-color" content="#7f231e">
+  <link rel="canonical" href="https://ch-zhou-0512.github.io/publicity-archive-assistant/">
+  <link rel="icon" type="image/svg+xml" href="assets/app-icon.svg">
+  <link rel="stylesheet" href="site.css">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="宣传记录助手｜让每一份网页新闻都可追溯">
+  <meta property="og:description" content="高保真桌面网页归档、A4 智能分页、微信公众号扩展兜底，全程在本机完成。">
+  <meta property="og:url" content="https://ch-zhou-0512.github.io/publicity-archive-assistant/">
+  <meta property="og:image" content="https://ch-zhou-0512.github.io/publicity-archive-assistant/assets/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "宣传记录助手",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Windows 10, Windows 11",
+    "softwareVersion": "1.0.0",
+    "description": "将新闻网页与微信公众号文章保存为可追溯、可打印的 A4 PDF。",
+    "license": "https://opensource.org/license/mit",
+    "downloadUrl": "https://github.com/CH-ZHOU-0512/publicity-archive-assistant/releases/latest",
+    "author": { "@type": "Person", "name": "周楚涵" }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header" data-header>
+    <div class="nav-shell">
+      <a class="brand" href="#top" aria-label="宣传记录助手首页">
+        <img src="assets/app-icon.svg" width="38" height="38" alt="">
+        <span>宣传记录助手</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>菜单</button>
+      <nav id="site-nav" class="site-nav" aria-label="主要导航" data-nav>
+        <a href="#advantages">核心优势</a>
+        <a href="#challenges">技术难点</a>
+        <a href="#privacy">安全隐私</a>
+        <a href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant/wiki">使用手册</a>
+        <a class="nav-github" href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="top" class="hero" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow"><span>v1.0.0</span> Windows 本地归档工具</p>
+          <h1 id="hero-title">网页会变化，<br>档案应当<span>留下证据。</span></h1>
+          <p class="hero-lead">把普通新闻网页、学校官网和微信公众号文章，完整保存为带来源、时间、页码与二维码的 A4 PDF。</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant/releases/latest">下载 Windows 版</a>
+            <a class="button button-secondary" href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant">查看源代码</a>
+          </div>
+          <ul class="hero-notes" aria-label="产品特征">
+            <li>全程本地运行</li>
+            <li>300 DPI A4</li>
+            <li>MIT 开源</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-strip" aria-label="发布基线">
+      <div class="proof-grid">
+        <div><strong>23</strong><span>项测试通过</span></div>
+        <div><strong>0</strong><span>个已知依赖漏洞</span></div>
+        <div><strong>4</strong><span>类真实站点样本</span></div>
+        <div><strong>300</strong><span>DPI 高分辨率</span></div>
+      </div>
+    </section>
+
+    <section id="advantages" class="section section-intro">
+      <div class="section-heading">
+        <p class="section-kicker">不只是“网页打印”</p>
+        <h2>保留原貌，也保留来路</h2>
+        <p>阅读模式会丢掉媒体身份，整页截图会让文字小到无法阅读。宣传记录助手在视觉保真、打印可读和来源追溯之间做了专门设计。</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card feature-card-wide">
+          <span class="feature-number">01</span>
+          <h3>桌面新闻页不再被视口裁掉</h3>
+          <p>固定 1440/1600px 布局、<code>min-width</code>、负边距、横向溢出和宽图，都按正文实际可见边界纳入截图，并在左右保留安全余量。</p>
+          <div class="edge-demo" aria-label="正文边界示意">
+            <span>正文左侧</span><i></i><span>正文右侧</span>
+          </div>
+        </article>
+        <article class="feature-card">
+          <span class="feature-number">02</span>
+          <h3>文字感知的 A4 分页</h3>
+          <p>按可打印区域换算切片高度，尽量把切线放在文字行之间；长图自然跨页，短尾页只做克制缩放。</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-number">03</span>
+          <h3>每页都有追溯线索</h3>
+          <p>来源域名、采集时间、页码和原文二维码写入页脚，文件名采用原文标题与发布日期。</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-number">04</span>
+          <h3>失败不会拖垮整批任务</h3>
+          <p>任务持久化到 SQLite，支持批量、确认、重试与重启恢复。历史默认显示 3 条，可随时展开或收起。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section product-section" aria-labelledby="product-title">
+      <div class="product-copy">
+        <p class="section-kicker">一个网址，一份可交付档案</p>
+        <h2 id="product-title">不学命令行，也能完成严肃归档</h2>
+        <p>双击桌面快捷方式，默认浏览器会打开本机操作页。每行粘贴一个网址，剩下的加载、识别、分页和命名由程序完成。</p>
+        <ol class="product-steps">
+          <li><span>1</span>粘贴一个或多个公开网址</li>
+          <li><span>2</span>核对自动识别的标题与日期</li>
+          <li><span>3</span>查看 PDF 或打开输出目录</li>
+        </ol>
+      </div>
+      <div class="app-window" aria-label="宣传记录助手界面示意">
+        <div class="window-bar"><i></i><i></i><i></i><span>127.0.0.1:43117</span></div>
+        <div class="window-body">
+          <div class="mock-heading">
+            <img src="assets/app-icon.svg" alt="" width="44" height="44">
+            <div><b>创建归档任务</b><small>每行粘贴一个新闻网址</small></div>
+          </div>
+          <div class="mock-input">https://news.example.com/article<br>https://mp.weixin.qq.com/s/...</div>
+          <button type="button" tabindex="-1">开始处理 2 个网址</button>
+          <div class="mock-history-title"><b>处理记录</b><span>最近 3 条　展开全部</span></div>
+          <div class="mock-task"><i class="done"></i><span><b>高校新闻归档样本</b><small>已生成 A4 PDF</small></span><em>已完成</em></div>
+          <div class="mock-task"><i class="work"></i><span><b>媒体报道采集样本</b><small>正在等待图片稳定</small></span><em>处理中</em></div>
+          <div class="mock-task"><i class="review"></i><span><b>公众号文章样本</b><small>请确认发布日期</small></span><em>待确认</em></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="challenges" class="section challenge-section">
+      <div class="section-heading section-heading-light">
+        <p class="section-kicker">技术难点</p>
+        <h2>真正困难的，是网页一直在变</h2>
+        <p>新闻站点并不是静态文档。页面尺寸、懒加载、登录态、反爬、字体和元数据都可能让一次看似简单的“另存为 PDF”失真。</p>
+      </div>
+      <div class="challenge-list">
+        <article><span>01</span><div><h3>页面稳定性</h3><p>滚动触发懒加载，等待字体和图片解码，监测高度连续稳定，不把加载遮罩存进档案。</p></div></article>
+        <article><span>02</span><div><h3>双采集路径</h3><p>公开网页走隔离 Edge；验证或登录态页面由离线扩展采集用户已看到的内容，不导出 Cookie。</p></div></article>
+        <article><span>03</span><div><h3>可靠元数据</h3><p>综合 JSON-LD、Open Graph、站点适配器与页面语义；无法确认时交给用户，不用采集日期冒充原文日期。</p></div></article>
+        <article><span>04</span><div><h3>不可信网页的安全边界</h3><p>本机监听、会话校验、协议限制、SSRF 防护与跳转复检共同约束渲染器。</p></div></article>
+      </div>
+      <a class="text-link light-link" href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant/wiki/Technical-Challenges">阅读完整技术说明 →</a>
+    </section>
+
+    <section id="privacy" class="section privacy-section">
+      <div class="privacy-seal" aria-hidden="true"><span>LOCAL</span><b>本机</b><small>ONLY</small></div>
+      <div class="privacy-copy">
+        <p class="section-kicker">本地优先</p>
+        <h2>你的档案，不经过我们的服务器</h2>
+        <p>项目没有自建云端服务。网址、任务历史、设置、截图和 PDF 都在当前电脑处理；本地 API 只监听 <code>127.0.0.1</code>。</p>
+        <ul>
+          <li>每次渲染使用隔离的临时 Edge 用户目录</li>
+          <li>阻止回环、私网、链路本地与云元数据地址</li>
+          <li>扩展不保存密码、Cookie 或文章内容副本</li>
+        </ul>
+        <a class="text-link" href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant/security/policy">查看安全政策 →</a>
+      </div>
+    </section>
+
+    <section class="section download-section">
+      <div>
+        <p class="section-kicker">现在开始</p>
+        <h2>把下一条新闻，变成一份可靠档案。</h2>
+        <p>适用于 64 位 Windows 10 / 11。安装包已包含运行环境，使用系统自带 Microsoft Edge 渲染网页。</p>
+      </div>
+      <div class="download-actions">
+        <a class="button button-primary" href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant/releases/latest">下载 v1.0.0</a>
+        <a class="text-link" href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant/wiki/Quick-Start">先看安装说明 →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <a class="footer-brand" href="#top"><img src="assets/app-icon.svg" width="30" height="30" alt="">宣传记录助手</a>
+      <p>让网页新闻成为可打印、可追溯、可长期整理的本地档案。</p>
+    </div>
+    <nav aria-label="页脚导航">
+      <a href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant">GitHub</a>
+      <a href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant/wiki">Wiki</a>
+      <a href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant/discussions">Discussions</a>
+      <a href="https://github.com/CH-ZHOU-0512/publicity-archive-assistant/blob/main/LICENSE">MIT License</a>
+    </nav>
+    <p class="author-note">作者：周楚涵 · <a href="mailto:2801572048@qq.com">2801572048@qq.com</a> · © <span data-year>2026</span></p>
+  </footer>
+  <script src="site.js" defer></script>
+</body>
+</html>

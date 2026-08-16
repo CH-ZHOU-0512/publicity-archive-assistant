@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用交流与问答
+    url: https://github.com/CH-ZHOU-0512/publicity-archive-assistant/discussions
+    about: 一般使用问题、经验分享和开放讨论请前往 Discussions
+  - name: 安全漏洞报告
+    url: https://github.com/CH-ZHOU-0512/publicity-archive-assistant/security/policy
+    about: 请私下报告可利用的安全问题，不要创建公开 Issue

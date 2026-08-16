@@ -1,0 +1,58 @@
+name: 缺陷报告
+description: 报告可复现的采集、PDF、界面或安装问题
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: 感谢反馈。安全漏洞请不要在这里公开，请改按 SECURITY.md 私下报告。
+  - type: input
+    id: version
+    attributes:
+      label: 应用版本
+      placeholder: 例如 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows 版本
+      placeholder: 例如 Windows 11 24H2 x64
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述
+      description: 说明实际结果和预期结果。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 粘贴网址……
+        2. 选择模式……
+        3. 点击……
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: 测试网址
+      description: 仅提供公开网址；内部或敏感页面请先脱敏。
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 错误信息或截图
+      description: 不要附带 Cookie、账号、内部文件或个人隐私。
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我确认这不是需要私下报告的安全漏洞
+          required: true
+        - label: 我已移除隐私和账号信息
+          required: true

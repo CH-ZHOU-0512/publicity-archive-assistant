@@ -206,6 +206,25 @@ async function capturePage(message: CaptureMessage): Promise<{ filename: string 
           width = Math.ceil(frameRect.width);
           height = Math.ceil(frameRect.height);
         }
+        const horizontalScope = wechatFrame || article;
+        if (horizontalScope) {
+          const captureBottom = captureY + height;
+          const visibleHorizontalRects = [horizontalScope, ...horizontalScope.querySelectorAll('*')].map(element => {
+            const rect = element.getBoundingClientRect(), style = getComputedStyle(element);
+            return {
+              left: rect.left + scrollX, right: rect.right + scrollX,
+              top: rect.top + scrollY, bottom: rect.bottom + scrollY,
+              visible: style.display !== 'none' && style.visibility !== 'hidden' && style.position !== 'fixed'
+            };
+          }).filter(rect => rect.visible && rect.right > rect.left && rect.bottom > captureY && rect.top < captureBottom);
+          const documentWidth = Math.max(root.scrollWidth, document.body.scrollWidth, innerWidth, captureX + width);
+          const minimumLeft = Math.min(captureX, ...visibleHorizontalRects.map(rect => rect.left));
+          const maximumRight = Math.max(captureX + width, ...visibleHorizontalRects.map(rect => rect.right));
+          const expandedX = Math.max(0, Math.floor(minimumLeft - 12));
+          const expandedRight = Math.min(documentWidth, Math.ceil(maximumRight + 12));
+          captureX = expandedX;
+          width = Math.max(1, expandedRight - expandedX);
+        }
         const textBlocks = [];
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode(node) {
           if (!(node.textContent || '').trim()) return NodeFilter.FILTER_REJECT;
@@ -284,14 +303,14 @@ function calculateSlices(bounds: CaptureBounds, nominalHeight: number): Array<{ 
   while (top < end - 1) {
     let bottom = Math.min(top + nominalHeight, end);
     if (bottom < end) {
-      const crossing = bounds.blocks.filter((block) => block.bottom - block.top < nominalHeight * .7).find((block) => block.top < bottom && block.bottom > bottom);
+      const crossing = bounds.blocks.filter((block) => block.bottom - block.top < nominalHeight * .7).find((block) => block.top - 3 < bottom && block.bottom + 3 > bottom);
       if (crossing && crossing.top - top > nominalHeight * .78) bottom = crossing.top - 3;
 
       const pagesIncludingCurrent = Math.max(1, Math.ceil((end - top - .5) / nominalHeight));
       const minimumBottom = end - (pagesIncludingCurrent - 1) * nominalHeight;
       if (bottom < minimumBottom) {
         bottom = minimumBottom;
-        const crossingAfterClamp = bounds.blocks.filter((block) => block.top < bottom && block.bottom > bottom).sort((a, b) => a.bottom - b.bottom)[0];
+        const crossingAfterClamp = bounds.blocks.filter((block) => block.top - 3 < bottom && block.bottom + 3 > bottom).sort((a, b) => a.bottom - b.bottom)[0];
         if (crossingAfterClamp && crossingAfterClamp.bottom + 2 <= top + nominalHeight) bottom = crossingAfterClamp.bottom + 2;
       }
     }
