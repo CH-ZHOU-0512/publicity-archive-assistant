@@ -1,0 +1,113 @@
+{
+  "name": "publicity-archive-assistant",
+  "productName": "宣传记录助手",
+  "description": "在本机将新闻网页和微信公众号文章保存为可追溯的 A4 PDF。",
+  "author": "周楚涵 <2801572048@qq.com>",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CH-ZHOU-0512/publicity-archive-assistant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CH-ZHOU-0512/publicity-archive-assistant/issues"
+  },
+  "homepage": "https://github.com/CH-ZHOU-0512/publicity-archive-assistant#readme",
+  "private": true,
+  "type": "module",
+  "main": "dist/desktop/main.js",
+  "scripts": {
+    "dev": "concurrently -k -n API,WEB -c blue,green \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "tsx watch src/server/index.ts --dev",
+    "dev:web": "vite --config web/vite.config.ts",
+    "build": "npm run build:web && npm run build:extension && npm run build:server",
+    "build:web": "vite build --config web/vite.config.ts",
+    "build:extension": "vite build --config extension/vite.config.ts",
+    "build:server": "tsc -p tsconfig.server.json",
+    "start": "node --disable-warning=ExperimentalWarning dist/server/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pack:win": "npm run build && electron-builder --win nsis --x64"
+  },
+  "dependencies": {
+    "@fastify/cookie": "latest",
+    "@fastify/static": "latest",
+    "@pdf-lib/fontkit": "latest",
+    "fastify": "latest",
+    "open": "latest",
+    "pdf-lib": "latest",
+    "puppeteer-core": "latest",
+    "qrcode": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/chrome": "latest",
+    "@types/node": "latest",
+    "@types/qrcode": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "concurrently": "latest",
+    "electron": "43.2.0",
+    "electron-builder": "26.15.3",
+    "tsx": "latest",
+    "typescript": "latest",
+    "vite": "latest",
+    "vitest": "latest"
+  },
+  "build": {
+    "appId": "cn.edu.hbue.publicity-archive-assistant",
+    "productName": "宣传记录助手",
+    "afterPack": "scripts/after-pack.cjs",
+    "asar": true,
+    "files": [
+      "dist/**/*",
+      "web/dist/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "extension/dist",
+        "to": "browser-extension"
+      }
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "icon": "build/icon.ico",
+      "executableName": "宣传记录助手",
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "宣传记录助手-安装程序-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "宣传记录助手",
+      "uninstallDisplayName": "宣传记录助手",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "installerLanguages": [
+        "zh_CN"
+      ],
+      "displayLanguageSelector": false,
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}

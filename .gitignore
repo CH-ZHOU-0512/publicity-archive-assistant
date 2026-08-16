@@ -1,0 +1,31 @@
+node_modules/
+
+# Generated application and installer output
+dist/
+web/dist/
+extension/dist/
+release/
+交付包/
+
+# Local user data and generated documents
+data/
+output/
+tmp/
+.tmp/
+.playwright-cli/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Local configuration and caches
+.env
+.env.*
+!.env.example
+.cache/
+*.log
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

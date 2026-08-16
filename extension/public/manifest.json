@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "宣传记录助手 · 当前页面采集",
+  "version": "0.1.0",
+  "description": "当普通网址采集失败时，将浏览器当前可见文章高保真保存到本地宣传记录助手。",
+  "permissions": ["activeTab", "scripting", "debugger"],
+  "host_permissions": [
+    "http://127.0.0.1:43117/*",
+    "https://mp.weixin.qq.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "保存当前文章",
+    "default_popup": "popup.html"
+  }
+}

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>保存当前文章</title>
+    <link rel="stylesheet" href="/src/popup.css" />
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">宣传记录助手 · 离线备用</p>
+      <h1>保存当前文章</h1>
+      <p id="page-url" class="url">正在读取当前页面…</p>
+      <label>原标题<input id="title" type="text" /></label>
+      <label>发布日期<input id="date" type="date" /></label>
+      <label>媒体来源<input id="source" type="text" /></label>
+      <button id="capture" disabled>按原网页样式保存为 A4 PDF</button>
+      <p id="status" class="status">请先启动电脑上的宣传记录助手。</p>
+      <p class="tip">采集时浏览器会提示扩展正在调试当前页面，这是本地截图所需的正常提示。</p>
+    </main>
+    <script type="module" src="/src/popup.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+:root { font-family: "Microsoft YaHei", Arial, sans-serif; color: #251f20; background: #f6f2ea; }
+body { margin: 0; width: 380px; }
+main { padding: 22px; }
+.eyebrow { margin: 0 0 5px; color: #8d1f2d; font-size: 11px; letter-spacing: .12em; }
+h1 { margin: 0 0 14px; font-size: 23px; }
+.url { margin: 0 0 16px; color: #766f67; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+label { display: block; margin: 11px 0; color: #655d57; font-size: 12px; }
+input { display: block; width: 100%; height: 38px; margin-top: 6px; padding: 0 10px; box-sizing: border-box; border: 1px solid #cfc6b8; background: white; }
+button { width: 100%; height: 42px; margin-top: 8px; border: 0; color: white; background: #8d1f2d; font-weight: 700; cursor: pointer; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.status { min-height: 36px; margin: 13px 0 0; color: #635b54; font-size: 12px; line-height: 1.6; }
+.status.error { color: #a12630; }
+.status.success { color: #28713f; }
+.tip { margin: 8px 0 0; color: #958b80; font-size: 10px; line-height: 1.55; }
